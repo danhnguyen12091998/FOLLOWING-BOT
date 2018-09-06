@@ -54,12 +54,12 @@ byte DW1000Class::_tmeas23C = 0;
 
 // driver internal state
 byte       DW1000Class::_extendedFrameLength = FRAME_LENGTH_NORMAL;
-byte       DW1000Class::_pacSize             = PAC_SIZE_8;
+byte       DW1000Class::_pacSize             = PAC_SIZE_64;	// PAC_SIZE_8
 byte       DW1000Class::_pulseFrequency      = TX_PULSE_FREQ_16MHZ;
 byte       DW1000Class::_dataRate            = TRX_RATE_6800KBPS;
 byte       DW1000Class::_preambleLength      = TX_PREAMBLE_LEN_128;
 byte       DW1000Class::_preambleCode        = PREAMBLE_CODE_16MHZ_4;
-byte       DW1000Class::_channel             = CHANNEL_5;
+byte       DW1000Class::_channel             = CHANNEL_3;	// CHANNEL_5   	
 DW1000Time DW1000Class::_antennaDelay;
 boolean    DW1000Class::_smartPower          = false;
 
@@ -373,12 +373,12 @@ void DW1000Class::tune() {
 		// TODO proper error/warning handling
 	}
 	// AGC_TUNE2
-	writeValueToBytes(agctune2, 0x2502A907L, LEN_AGC_TUNE2);
+	writeValueToBytes(agctune2, 0x2502A907, LEN_AGC_TUNE2);	// 0x2502A907L
 	// AGC_TUNE3
-	writeValueToBytes(agctune3, 0x0035, LEN_AGC_TUNE3);
+	writeValueToBytes(agctune3, 0x0055, LEN_AGC_TUNE3);	// 0x0035
 	// DRX_TUNE0b (already optimized according to Table 20 of user manual)
 	if(_dataRate == TRX_RATE_110KBPS) {
-		writeValueToBytes(drxtune0b, 0x0016, LEN_DRX_TUNE0b);
+		writeValueToBytes(drxtune0b, 0x000A, LEN_DRX_TUNE0b);	//0x0016
 	} else if(_dataRate == TRX_RATE_850KBPS) {
 		writeValueToBytes(drxtune0b, 0x0006, LEN_DRX_TUNE0b);
 	} else if(_dataRate == TRX_RATE_6800KBPS) {
@@ -469,7 +469,7 @@ void DW1000Class::tune() {
 	} else if(_channel == CHANNEL_2) {
 		writeValueToBytes(rftxctrl, 0x00045CA0L, LEN_RF_TXCTRL);
 	} else if(_channel == CHANNEL_3) {
-		writeValueToBytes(rftxctrl, 0x00086CC0L, LEN_RF_TXCTRL);
+		writeValueToBytes(rftxctrl, 0x00086CC0, LEN_RF_TXCTRL);	//0x00086CC0L
 	} else if(_channel == CHANNEL_4) {
 		writeValueToBytes(rftxctrl, 0x00045C80L, LEN_RF_TXCTRL);
 	} else if(_channel == CHANNEL_5) {
@@ -699,7 +699,7 @@ void DW1000Class::tune() {
 	writeBytes(DRX_TUNE, DRX_TUNE1b_SUB, drxtune1b, LEN_DRX_TUNE1b);
 	writeBytes(DRX_TUNE, DRX_TUNE2_SUB, drxtune2, LEN_DRX_TUNE2);
 	writeBytes(DRX_TUNE, DRX_TUNE4H_SUB, drxtune4H, LEN_DRX_TUNE4H);
-	writeBytes(LDE_IF, LDE_CFG1_SUB, ldecfg1, LEN_LDE_CFG1);
+	writeBytes(.0 _IF, LDE_CFG1_SUB, ldecfg1, LEN_LDE_CFG1);
 	writeBytes(LDE_IF, LDE_CFG2_SUB, ldecfg2, LEN_LDE_CFG2);
 	writeBytes(LDE_IF, LDE_REPC_SUB, lderepc, LEN_LDE_REPC);
 	writeBytes(TX_POWER, NO_SUB, txpower, LEN_TX_POWER);
