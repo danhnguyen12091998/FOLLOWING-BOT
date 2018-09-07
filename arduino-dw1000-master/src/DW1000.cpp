@@ -17,6 +17,7 @@
  * @file DW1000.cpp
  * Arduino driver library (source file) for the Decawave DW1000 UWB transceiver IC.
  */
+// ....................
 
 #include "DW1000.h"
 
@@ -28,7 +29,7 @@ DW1000Class DW1000;
 // pins
 uint8_t DW1000Class::_ss;
 uint8_t DW1000Class::_rst;
-uint8_t DW1000Class::_irq;
+uint8_t DW1000Class::_irq; 
 
 
 // IRQ callbacks
